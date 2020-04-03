@@ -23,8 +23,7 @@ namespace VirtualDesktopShowcase
 		[DllImport("user32.dll")]
 		private static extern short GetAsyncKeyState(UInt16 virtualKeyCode);
 
-		[DllImport("user32.dll")]
-		static extern void keybd_event(byte bVk, byte bScan, uint dwFlags,UIntPtr dwExtraInfo);
+
 
 		public MainWindow()
 		{
