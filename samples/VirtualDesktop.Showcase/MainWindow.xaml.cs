@@ -4,7 +4,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using NHotkey;
+using NHotkey.Wpf;
 using WindowsDesktop;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace VirtualDesktopShowcase
 {
@@ -12,10 +18,21 @@ namespace VirtualDesktopShowcase
 	{
 		private static readonly int _delay = 2000;
 
+		
+
+		[DllImport("user32.dll")]
+		private static extern short GetAsyncKeyState(UInt16 virtualKeyCode);
+
+		[DllImport("user32.dll")]
+		static extern void keybd_event(byte bVk, byte bScan, uint dwFlags,UIntPtr dwExtraInfo);
+
 		public MainWindow()
 		{
 			this.InitializeComponent();
 			InitializeComObjects();
+			HotkeyManager.Current.AddOrReplace("Next", Key.I, ModifierKeys.None,  SwitchRight );
+			HotkeyManager.Current.AddOrReplace("Previous", Key.U, ModifierKeys.None,  SwitchLeft );
+			
 		}
 
 		private static async void InitializeComObjects()
@@ -77,9 +94,44 @@ namespace VirtualDesktopShowcase
 			left.Switch();
 		}
 
-		private void SwitchRight(object sender, RoutedEventArgs e)
+		private void SwitchRight(object sender, RoutedEventArgs e) 
 		{
 			this.GetCurrentDesktop().GetRight()?.Switch();
+		}
+		
+		private void SwitchRight(object sender, HotkeyEventArgs e)
+		{
+
+			//var space  = Keyboard.GetKeyStates(Key.Space) == KeyStates.Down;
+			var mouse = GetAsyncKeyState(0x01) ; // botão direito
+
+			if(mouse<0) {
+				//MessageBox.Show(mouse.ToString());
+				this.Show();
+				this.GetCurrentDesktop().GetRight()?.SwitchAndMove(this);
+				this.Hide();
+			}else{
+				new InputSimulator().Keyboard.TextEntry("i");
+				
+			}
+		}
+		private void SwitchLeft(object sender, HotkeyEventArgs e)
+		{
+			
+			//var space  = Keyboard.GetKeyStates(Key.Space) == KeyStates.Down;
+			var mouse = GetAsyncKeyState(0x01) ; // botão direito
+
+			if(mouse<0) {
+				//MessageBox.Show(mouse.ToString());
+				this.Show();
+				this.GetCurrentDesktop().GetLeft()?.SwitchAndMove(this);
+				this.Hide();
+			}else{
+				new InputSimulator().Keyboard.TextEntry("u");
+			}
+				
+
+			
 		}
 
 		private async void SwitchRightAndMove(object sender, RoutedEventArgs e)
