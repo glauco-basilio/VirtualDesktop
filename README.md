@@ -2,7 +2,7 @@
 
 Esse fork é uma experiência sobre adicionar atalhos globais para as funcionalidades implementdas pelo projeto original. 
 
-Em cima do projeto Showcase adicionei funcinalidede que torna o botão esquerdo do mouse um modificador que quando combindo com i move para o VD da direita e quando combindo com u move para o VD da esquerda.
+Em cima do projeto Showcase adicionei funcinalidade que torna o botão esquerdo do mouse um modificador que quando combindo com i move para o VD da direita e quando combindo com u move para o VD da esquerda.
 
 Isso é útil pra mim utilizando um Thinkpad Wireless Keuboard (KT-1255) pois minimiza o deslocamento da mão até as teclas de seta. As demais tentativas de fazer o mesmo utilizando Autohotkey falharam gerando travamento das teclas utilizadas como atalho fazendo com que a UI não repondesse corretamenta aos cliques do mouse e disparando atalhos durante a digitação.
 
